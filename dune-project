@@ -19,7 +19,7 @@
  (name raikou)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml dune base stdio)
+ (depends ocaml dune base stdio ounit2)
  (tags
   (topics "to describe" your project)))
 

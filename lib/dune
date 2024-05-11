@@ -1,2 +1,3 @@
 (library
- (name raikou))
+ (name raikou)
+ (libraries base))
