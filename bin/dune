@@ -1,4 +1,4 @@
 (executable
  (public_name raikou)
  (name main)
- (libraries raikou))
+ (libraries raikou base stdio))
