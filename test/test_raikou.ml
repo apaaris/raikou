@@ -7,6 +7,8 @@ let v2 = Vec3.create 2. 4. 5.
 
 let r = Ray.create v1 (Vec3.create 1. 0. 0.)
 
+let sphere = Sphere.create (Vec3.create 0. 0. (-1.)) 0.5
+
 let tests = "test suite" >::: [
   "Vec3 create" >:: (fun _ -> 
       assert_equal v1.x 1.; 
@@ -57,10 +59,55 @@ let tests = "test suite" >::: [
   "Vec3 unit " >:: (fun _ -> 
         assert_equal (Vec3.length (Vec3.unit v1)) (1.)
       );
-
+  
+  "Vec3 leap " >:: (fun _ -> 
+        assert_equal (Vec3.lerp  v1 v2 0.5) (Vec3.create 1.5 3. 4.)
+      );
+  
   "Ray at " >:: (fun _ -> 
         assert_equal (r |> Ray.at 2.) (Vec3.create 3. 2. 3.)
       );
 
+  "Sphere intersection intersect" >:: (fun _ ->
+        assert_equal (Sphere.hit
+                        (Ray.create
+                            (Vec3.create 0. 0. 0.)
+                            (Vec3.create 0. 0. (-1.))
+                        ) sphere)
+                     (Some {t=0.5;
+                            p=(Vec3.create 0. 0. (-0.5));
+                            normal=(Vec3.create 0. 0. 1.)}
+                      )
+       );
+
+   "Sphere intersection intersect inside" >:: (fun _ ->
+        assert_equal (Sphere.hit
+          (Ray.create
+            (Vec3.create 0. 0. (-1.))
+            (Vec3.create 0. 0. (-1.))
+          ) sphere)
+          (Some {t=0.5;
+                  p=(Vec3.create 0. 0. (-1.5));
+                  normal=(Vec3.create 0. 0. (-1.))}
+          )
+      );
+
+   "Sphere intersection out" >:: (fun _ ->
+             assert_equal (Sphere.hit
+              (Ray.create
+          (Vec3.create 0. 1. 0.)
+          (Vec3.create 0. 0. (-1.))
+        ) sphere) None
+     );
+
+
+  "Sphere intersection reverse direction" >:: (fun _ ->
+    assert_equal (Sphere.hit   
+                  (Ray.create
+                    (Vec3.create 0. 0. 0.) 
+                    (Vec3.create 0. 0. 1.)
+                  ) sphere) None       
+   );
 ]
+
 let _ = run_test_tt_main tests
