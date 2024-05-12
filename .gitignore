@@ -12,6 +12,8 @@
 _build/
 _tmp/
 
+.DS_Store
+
 # ocamlbuild targets
 *.byte
 *.native
