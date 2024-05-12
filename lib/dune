@@ -1,3 +1,4 @@
 (library
  (name raikou)
- (libraries base))
+ (libraries base stdio)
+)
