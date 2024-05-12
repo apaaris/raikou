@@ -57,3 +57,6 @@ let unit v1 =
     y = v1.y /. l;
     z = v1.z /. l;
 }
+
+let lerp v1 v2 t =
+    (v1 *| (1. -. t)) +| (v2 *| t)

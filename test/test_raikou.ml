@@ -5,6 +5,8 @@ open Raikou.Vec3
 let v1 = Vec3.create 1. 2. 3.
 let v2 = Vec3.create 2. 4. 5.
 
+let r = Ray.create v1 (Vec3.create 1. 0. 0.)
+
 let tests = "test suite" >::: [
   "Vec3 create" >:: (fun _ -> 
       assert_equal v1.x 1.; 
@@ -54,6 +56,10 @@ let tests = "test suite" >::: [
   
   "Vec3 unit " >:: (fun _ -> 
         assert_equal (Vec3.length (Vec3.unit v1)) (1.)
+      );
+
+  "Ray at " >:: (fun _ -> 
+        assert_equal (r |> Ray.at 2.) (Vec3.create 3. 2. 3.)
       );
 
 ]
